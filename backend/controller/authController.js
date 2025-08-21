@@ -79,7 +79,31 @@ const login = async (req, res) => {
   }
 };
 
+const getProfile = async(req,res) => {
+  try{
+    const userId = req.user.id;
+
+    const profile = await prisma.user.findUnique({
+      where: {id :userId},
+      select: {
+        name: true,
+        email: true,
+        profilePic: true
+      }
+    })    
+
+    return res.status(200).json({success: profile})
+    
+  }catch(err){
+    console.log(err);
+    return res.status(500).json({ error: "Something went wrong." });
+  }
+}
+
+
+
 module.exports = {
   register,
   login,
+  getProfile
 };
