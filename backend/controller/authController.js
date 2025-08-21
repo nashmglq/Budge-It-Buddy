@@ -100,10 +100,40 @@ const getProfile = async(req,res) => {
   }
 }
 
+const updateProfile = async(req,res) => {
+  try{
+      const userId = req.user.id;
+      const {name, email, profilePic} = req.body;
+
+      if(!name || !email || !profilePic){
+        return res.status(400).json({error: "Input all fields."})
+      }
+
+
+
+      await prisma.user.update({
+        where: {id : userId},
+        data: {
+          name,
+          email,
+          profilePic
+        }
+      })
+
+
+      return res.status(200).json({success: "Successfully Updated Profile."})
+
+  }catch(err){
+    console.log(err);
+    return res.status(500).json({ error: "Something went wrong." });
+  }
+}
+
 
 
 module.exports = {
   register,
   login,
-  getProfile
+  getProfile,
+  updateProfile
 };
