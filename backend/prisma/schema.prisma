@@ -9,11 +9,24 @@ datasource db {
 }
 
 model User {
-  id         Int     @id @default(autoincrement())
-  name       String  @db.VarChar(100)
-  email      String  @unique @db.VarChar(60)
+  id         Int        @id @default(autoincrement())
+  name       String     @db.VarChar(100)
+  email      String     @unique @db.VarChar(60)
   profilePic String?
-  password   String  @db.VarChar(255)
+  password   String     @db.VarChar(255)
+  expenses   Expenses[]
 
   @@map("user")
+}
+
+model Expenses {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  price     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
+
+  @@map("expenses")
 }
