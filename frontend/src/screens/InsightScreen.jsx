@@ -1,7 +1,10 @@
 import React from 'react'
+import DashboardLayout from '../layouts/DashboardLayout'
 
 export const InsightScreen = () => {
   return (
-    <div>InsightScreen</div>
+    <DashboardLayout>
+      <div>InsightScreen</div>
+    </DashboardLayout>
   )
 }
