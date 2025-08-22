@@ -6,7 +6,8 @@ const {authRoute} = require("./router/authRouter")
 const cors = require("cors");
 const path = require('path');
 const { expensesRouter } = require("./router/expensesRouter");
-const { incomeRouter } = require("./router/incomeRouter")
+const { incomeRouter } = require("./router/incomeRouter");
+const { chatBotRouter } = require("./router/aiRouter");
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(cors())
@@ -16,6 +17,7 @@ app.use(express.urlencoded({extended:true}))
 app.use("/auth", authRoute)
 app.use("/api", expensesRouter)
 app.use("/api", incomeRouter)
+app.use("/api", chatBotRouter)
 
 app.listen(port, () => {
     console.log(`Running on PORT: ${port}`)
