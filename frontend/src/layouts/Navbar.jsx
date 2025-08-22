@@ -8,7 +8,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Wallet,
-  LogOut
+  LogOut,
+  UserRound
 } from "lucide-react";
 import { UserContext } from "../context/UserContext";
 import { useNavigate, NavLink } from "react-router-dom";
@@ -35,6 +36,8 @@ function Navbar({ collapsed, setCollapsed }) {
     { name: "Income", icon: <PiggyBank size={20} />, path: "/income" },
     { name: "Expense", icon: <HandCoins size={20} />, path: "/expense" },
     { name: "Insights", icon: <ChartColumnIncreasing size={20} />, path: "/insight" },
+    { name: "Profile", icon: <UserRound size={20} />, path: "/profile" }
+    
   ];
 
   return (

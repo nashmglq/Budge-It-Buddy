@@ -6,6 +6,7 @@ import { IncomeScreen } from "./screens/IncomeScreen";
 import { InsightScreen } from "./screens/InsightScreen";
 import UserAuthScreen from "./screens/UserAuthScreen";
 import { UserContext, UserProvider } from "./context/UserContext";
+import { ProfileScreen } from "./screens/ProfileScreen";
 
 
 function App() {
@@ -32,6 +33,10 @@ function App() {
           <Route
             path="/insight"
             element={<PrivateRoute><InsightScreen /></PrivateRoute>}
+          />
+          <Route
+            path="/profile"
+            element={<PrivateRoute><ProfileScreen /></PrivateRoute>}
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
