@@ -1,47 +1,55 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate
-} from "react-router-dom";
-
+import React, { useContext } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { DashboardScreen } from "./screens/DashboardScreen";
 import { ExpenseScreen } from "./screens/ExpenseScreen";
 import { IncomeScreen } from "./screens/IncomeScreen";
 import { InsightScreen } from "./screens/InsightScreen";
 import UserAuthScreen from "./screens/UserAuthScreen";
+import { UserContext, UserProvider } from "./context/UserContext";
+
 
 function App() {
   return (
-    <Router>
-      <AppRoutes />
-    </Router>
+    <UserProvider>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={<AuthWrapper><UserAuthScreen /></AuthWrapper>}
+          />
+          <Route
+            path="/home"
+            element={<PrivateRoute><DashboardScreen /></PrivateRoute>}
+          />
+          <Route
+            path="/expense"
+            element={<PrivateRoute><ExpenseScreen /></PrivateRoute>}
+          />
+          <Route
+            path="/income"
+            element={<PrivateRoute><IncomeScreen /></PrivateRoute>}
+          />
+          <Route
+            path="/insight"
+            element={<PrivateRoute><InsightScreen /></PrivateRoute>}
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
+    </UserProvider>
   );
 }
 
-const AppRoutes = () => {
-  // Temporary fake auth flag (replace with real user logic later)
-  const isAuthenticated = false;
-
-  const PrivateRoute = ({ children }) => {
-    return isAuthenticated ? children : <Navigate to="/login" />;
-  };
-
-  return (
-    <Routes>
-      <Route path="/" element={<UserAuthScreen />} />
-      <Route path="/home" element={<DashboardScreen />} />
-      <Route path="/expense" element={<ExpenseScreen />} />
-      <Route path="/income" element={<IncomeScreen />} /> 
-      <Route path="/insight" element={<InsightScreen/>} />
-      <Route path="/expense" element={<ExpenseScreen />} />
-    </Routes>
-  );
+// Simple Private Route
+const PrivateRoute = ({ children }) => {
+  const { user } = useContext(UserContext);
+  return user ? children : <Navigate to="/" replace />;
 };
 
-const Root = () => {
-  const isAuthenticated = false; // stub for now
-  return isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/login" />;
+// Redirect logged-in user away from login
+const AuthWrapper = ({ children }) => {
+  const { user } = useContext(UserContext);
+  return user ? <Navigate to="/home" replace /> : children;
 };
 
 export default App;
