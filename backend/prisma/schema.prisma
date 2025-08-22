@@ -15,6 +15,7 @@ model User {
   profilePic String?
   password   String     @db.VarChar(255)
   expenses   Expenses[]
+  income     Income[]
 
   @@map("user")
 }
@@ -29,4 +30,16 @@ model Expenses {
   userId    Int?
 
   @@map("expenses")
+}
+
+model Income  {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  amount    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
+
+  @@map ("income")
 }
