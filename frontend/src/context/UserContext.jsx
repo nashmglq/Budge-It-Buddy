@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
 export const UserContext = createContext();
@@ -7,8 +7,17 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   const API = axios.create({
-    baseURL: "http://localhost:5001", // backend URL
+    baseURL: "http://localhost:5001",
   });
+
+  // Load user from localStorage on mount
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const email = localStorage.getItem("email");
+    if (token && email) {
+      setUser({ email, token });
+    }
+  }, []);
 
   const registerUser = async (name, email, password1, password2) => {
     const res = await API.post("/auth/register", { name, email, password1, password2 });
@@ -17,13 +26,22 @@ export const UserProvider = ({ children }) => {
 
   const loginUser = async (email, password) => {
     const res = await API.post("/auth/login", { email, password });
-    setUser({ email, token: res.data.success.token });
-    localStorage.setItem("token", res.data.success.token);
+    const token = res.data.success.token;
+
+    setUser({ email, token });
+    localStorage.setItem("token", token);
+    localStorage.setItem("email", email);
     return res.data;
   };
 
+  const logoutUser = () => {
+    setUser(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+  };
+
   return (
-    <UserContext.Provider value={{ user, registerUser, loginUser }}>
+    <UserContext.Provider value={{ user, registerUser, loginUser, logoutUser }}>
       {children}
     </UserContext.Provider>
   );

@@ -18,9 +18,11 @@ export default function UserAuthScreen() {
     try {
       if (isRegister) {
         await registerUser(form.name, form.email, form.password1, form.password2);
-        setIsRegister(false);
+        setIsRegister(false); // switch to login
+        setForm({ name: "", email: "", password1: "", password2: "" }); // clear form
       } else {
         await loginUser(form.email, form.password1);
+        setForm({ name: "", email: "", password1: "", password2: "" }); // optional: clear after login
       }
     } catch (err) {
       setError(err.response?.data?.error || "Something went wrong");
@@ -28,6 +30,13 @@ export default function UserAuthScreen() {
       setLoading(false);
     }
   };
+
+  const toggleForm = () => {
+  setIsRegister(!isRegister);
+  // Reset form when switching
+  setForm({ name: "", email: "", password1: "", password2: "" });
+  setError("");
+};
 
   return (
     <div className="h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
@@ -88,7 +97,7 @@ export default function UserAuthScreen() {
         <p className="text-sm mt-4 text-center text-gray-500 dark:text-gray-400">
           {isRegister ? "Already have an account?" : "Don't have an account?"}{" "}
           <button
-            onClick={() => setIsRegister(!isRegister)}
+            onClick={toggleForm}
             className="text-primary font-semibold"
           >
             {isRegister ? "Login" : "Register"}
