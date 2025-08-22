@@ -40,8 +40,37 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem("email");
   };
 
+
+  const getProfile = async () => {
+      if (!user?.token) return null;
+      const res = await API.get("/auth/profile", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      return res.data.success;
+    };
+
+  // ✅ Update user profile
+  const updateProfile = async (name, email, profilePic) => {
+    if (!user?.token) return null;
+    const res = await API.put(
+      "/auth/profile",
+      { name, email, profilePic },
+      { headers: { Authorization: `Bearer ${user.token}` } }
+    );
+    return res.data;
+  };
+
   return (
-    <UserContext.Provider value={{ user, registerUser, loginUser, logoutUser }}>
+    <UserContext.Provider
+      value={{
+        user,
+        registerUser,
+        loginUser,
+        logoutUser,
+        getProfile,
+        updateProfile,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
