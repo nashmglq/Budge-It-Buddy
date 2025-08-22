@@ -15,6 +15,7 @@ model User {
   password   String     @db.VarChar(255)
   expenses   Expenses[]
   income     Income[]
+  chat       chat[]
 
   @@map("user")
 }
@@ -25,20 +26,29 @@ model Expenses {
   price     Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    Int?
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int
 
   @@map("expenses")
 }
 
-model Income  {
+model Income {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(100)
   amount    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    Int?
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int
 
-  @@map ("income")
+  @@map("income")
+}
+
+model chat {
+  id      Int     @id @default(autoincrement())
+  message String  @db.Text
+  isAI    Boolean @default(false)
+  createdAt DateTime @default(now())
+  User    User    @relation(fields: [userId], references: [id])
+  userId  Int
 }
