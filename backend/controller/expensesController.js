@@ -1,4 +1,4 @@
-const { PrismaClient } = require("../generated/prisma");
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const postExpenses = async (req, res) => {
@@ -100,7 +100,9 @@ const getExpenses = async (req, res) => {
       },
     });
 
-    return res.status(200).json({ success: expenses });
+    const totalExpenses = expenses.reduce((sum, item) => sum + item.price, 0);
+
+    return res.status(200).json({ success: expenses, totalExpenses });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Something went wrong." });
