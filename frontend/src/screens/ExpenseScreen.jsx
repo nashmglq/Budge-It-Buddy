@@ -125,7 +125,7 @@ export const ExpenseScreen = () => {
               className="flex justify-between items-center bg-gray-50 border p-4 rounded-md shadow-sm"
             >
               <span className="text-gray-800 font-medium">
-                {expense.name} - ₱{expense.price}
+                {expense.name}: ₱{expense.price}
               </span>
               <div className="flex gap-2">
                 <button

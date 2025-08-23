@@ -4,6 +4,6 @@ const { chatBot, getChat } = require("../controller/genController/aiGen");
 const chatBotRouter = express.Router();
 
 chatBotRouter.post("/summary", authCheck, chatBot);
-chatBotRouter.get("/get-chats", authCheck, getChat);
+chatBotRouter.get("/getChat", authCheck, getChat);
 
 module.exports = {chatBotRouter};
