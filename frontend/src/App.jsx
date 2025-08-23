@@ -7,7 +7,7 @@ import { InsightScreen } from "./screens/InsightScreen";
 import UserAuthScreen from "./screens/UserAuthScreen";
 import { UserContext, UserProvider } from "./context/UserContext";
 import { ProfileScreen } from "./screens/ProfileScreen";
-import ChatBot from './components/ChatBot';
+import ChatBot from "./screens/ChatBot";
 
 
 function App() {
