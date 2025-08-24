@@ -8,6 +8,7 @@ const path = require('path');
 const { expensesRouter } = require("./router/expensesRouter");
 const { incomeRouter } = require("./router/incomeRouter");
 const { chatBotRouter } = require("./router/aiRouter");
+const { goalRouter } = require("./router/goalRouter");
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(cors())
@@ -18,6 +19,7 @@ app.use("/auth", authRoute)
 app.use("/api", expensesRouter)
 app.use("/api", incomeRouter)
 app.use("/api", chatBotRouter)
+app.use("/api", goalRouter)
 
 app.listen(port, () => {
     console.log(`Running on PORT: ${port}`)
