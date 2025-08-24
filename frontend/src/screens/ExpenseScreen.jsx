@@ -6,6 +6,8 @@ import ExpenseCard from '../cards/ExpenseCard';
 import ExpenseModal from '../components/modals/ExpenseModal';
 import ExpenseCategoryGraph from '../components/charts/ExpenseCategoryGraph';
 import ExpenseListCard from '../cards/ExpenseListCard';
+import { ChatBotModal } from "../components/modals/ChatBotModal"; 
+import { MessageCircle } from "lucide-react"; 
 axios.defaults.baseURL = 'http://localhost:5001';
 
 export const ExpenseScreen = () => {
@@ -113,6 +115,14 @@ export const ExpenseScreen = () => {
           />
         )}
       </div>
+            <button
+              onClick={() => setIsChatOpen(true)}
+              className="fixed bottom-4 right-4 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600"
+            >
+              <MessageCircle size={24} />
+            </button>
+            {/* ChatBot Modal */}
+            <ChatBotModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </DashboardLayout>
   );
 };
