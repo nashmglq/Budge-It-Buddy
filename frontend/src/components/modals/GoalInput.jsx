@@ -25,11 +25,9 @@ export const GoalInput = ({ isOpen, onClose }) => {
 
     try {
       await axios.post(`${baseURL}/api/post-goal`, formData, config);
-      alert("Goal saved successfully!");
       onClose();
     } catch (err) {
       console.error("Error saving goal:", err);
-      alert("Failed to save goal");
     }
   };
 

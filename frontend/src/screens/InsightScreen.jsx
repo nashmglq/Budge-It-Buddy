@@ -16,7 +16,6 @@ import ReactMarkdown from "react-markdown";
 import { ChatBotModal } from "../components/modals/ChatBotModal"; 
 import { MessageCircle } from "lucide-react"; 
 
-
 const baseURL = "http://localhost:5001";
 
 export const InsightScreen = () => {
