@@ -12,10 +12,13 @@ import {
 } from "recharts";
 import { GoalInput } from "../components/modals/GoalInput";
 import UpdateGoalModal from "../components/modals/GoalUpdate";
+import { ChatBotModal } from "../components/modals/ChatBotModal"; 
+import { MessageCircle } from "lucide-react"; 
 
 const baseURL = "http://localhost:5001";
 
 export const InsightScreen = () => {
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [data, setData] = useState([]);
   const [goals, setGoals] = useState([]);
   const [isGoalModalOpen, setIsGoalModalOpen] = useState(false);
@@ -171,6 +174,16 @@ export const InsightScreen = () => {
         onClose={() => setIsUpdateModalOpen(false)}
         onSuccess={fetchGoals}
       />
+
+            <button
+              onClick={() => setIsChatOpen(true)}
+              className="fixed bottom-4 right-4 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600"
+            >
+              <MessageCircle size={24} />
+            </button>
+      
+            {/* ChatBot Modal */}
+            <ChatBotModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </DashboardLayout>
   );
 };
