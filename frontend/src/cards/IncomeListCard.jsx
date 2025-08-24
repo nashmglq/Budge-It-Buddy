@@ -83,55 +83,53 @@ export default function IncomeListCard({ incomes, handleDelete, handleUpdate }) 
       <h3 className="text-lg font-semibold text-gray-800 mb-4">Income History</h3>
 
       <ul className="space-y-3 overflow-y-auto flex-1">
-  {incomes.length === 0 ? (
-    <p className="text-gray-500 text-sm">No income records yet.</p>
-  ) : (
-    [...incomes]
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // newest first
-      .map((income) => (
-        <li
-            key={income.id}
-            className="flex flex-col gap-2 lg:flex-row lg:items-center bg-white border rounded-lg shadow-sm p-3"
-          >
-            {/* Left: Icon + Name + Date */}
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <ArrowUpCircle className="text-green-500 w-5 h-5 flex-shrink-0" />
-                <span className="text-gray-800 font-medium truncate">
-                  {income.name} - ₱{income.amount.toLocaleString()}
-                </span>
-              </div>
-              <p className="text-gray-500 text-sm ml-7">
-                {new Date(income.createdAt).toLocaleDateString("en-PH", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </p>
-            </div>
-
-            {/* Right: Actions */}
-            <div className="flex flex-wrap gap-2 justify-end lg:justify-start">
-              <button
-                onClick={() => setEditingIncome(income)}
-                className="bg-green-500 hover:bg-green-600 text-white text-xs lg:text-sm px-3 py-1 rounded-md transition"
+        {incomes.length === 0 ? (
+          <p className="text-gray-500 text-sm">No income records yet.</p>
+        ) : (
+          [...incomes]
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .map((income) => (
+              <li
+                key={income.id}
+                className="flex flex-col sm:flex-row sm:items-center bg-gray-50 border p-3 rounded-md shadow-sm gap-2 sm:gap-4"
               >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(income.id)}
-                className="bg-[#C7253E] hover:bg-[#A11F33] text-white text-xs lg:text-sm px-3 py-1 rounded-md transition"
-              >
-                Delete
-              </button>
-            </div>
-        </li>
-      ))
-  )}
-</ul>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center w-full">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <ArrowUpCircle className="text-green-500 w-5 h-5 flex-shrink-0" />
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-gray-800 font-medium truncate">
+                        {income.name} - ₱{income.amount.toLocaleString()}
+                      </span>
+                      <span className="text-gray-500 text-xs opacity-70">
+                        {new Date(income.createdAt).toLocaleDateString("en-PH", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </span>
+                    </div>
+                  </div>
 
+                  <div className="flex gap-2 mt-2 sm:mt-0 sm:flex-row flex-wrap sm:justify-end">
+                    <button
+                      onClick={() => setEditingIncome(income)}
+                      className="text-sm bg-green-500 hover:bg-green-700 text-white px-3 py-1 rounded-md"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(income.id)}
+                      className="text-sm bg-[#C7253E] hover:bg-[#821131] text-white px-3 py-1 rounded-md"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </li>
+            ))
+        )}
+      </ul>
 
-      {/* Edit Modal */}
       {editingIncome && (
         <EditIncomeModal
           income={editingIncome}

@@ -1,9 +1,10 @@
 const express = require("express");
 const { authCheck } = require("../middleware/authCheck");
-const { chatBot, getChat } = require("../controller/genController/aiGen");
+const { chatBot, getChat, insightsAI } = require("../controller/genController/aiGen");
 const chatBotRouter = express.Router();
 
 chatBotRouter.post("/summary", authCheck, chatBot);
-chatBotRouter.get("/get-chats", authCheck, getChat);
+chatBotRouter.get("/getChat", authCheck, getChat);
+chatBotRouter.get("/insights", authCheck, insightsAI)
 
 module.exports = {chatBotRouter};

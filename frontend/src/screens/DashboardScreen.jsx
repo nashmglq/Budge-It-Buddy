@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DashboardLayout from "../layouts/DashboardLayout";
-import { Wallet, ArrowDownCircle, ArrowUpCircle } from "lucide-react";
+import { Wallet, ArrowDownCircle, ArrowUpCircle, MessageCircle } from "lucide-react";
 import IncomeHistoryChart from "../components/charts/IncomeHistoryChart";
 import ExpenseCategoryChart from "../components/charts/ExpenseCategoryChart";
 import BalanceOverTimeChart from "../components/charts/BalanceOverTimeChart";
+import { ChatBotModal } from "../components/modals/ChatBotModal";
 
 axios.defaults.baseURL = "http://localhost:5001";
 
@@ -36,6 +37,8 @@ export const DashboardScreen = () => {
   const [expenses, setExpenses] = useState(0);
   const [expensesList, setExpensesList] = useState([]);
   const [incomeHistory, setIncomeHistory] = useState([]);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   const token = localStorage.getItem("token");
 
   const config = {
@@ -43,7 +46,6 @@ export const DashboardScreen = () => {
   };
 
   useEffect(() => {
-    // Fetch income
     axios
       .get("/api/get-income", config)
       .then((res) => {
@@ -66,7 +68,6 @@ export const DashboardScreen = () => {
       })
       .catch((err) => console.error("Income fetch error:", err));
 
-    // Fetch expenses
     axios
       .get("/api/get-expenses", config)
       .then((res) => {
@@ -78,49 +79,33 @@ export const DashboardScreen = () => {
 
   const balance = income - expenses;
 
-
   return (
     <DashboardLayout>
       <div className="p-6">
-        {/* Top 3 Info Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-          <InfoCard
-            icon={<Wallet />}
-            label="Current Balance"
-            value={balance}
-            color="--color-balance"
-          />
-          <InfoCard
-            icon={<ArrowUpCircle />}
-            label="Total Income"
-            value={income}
-            color="--color-income"
-          />
-          <InfoCard
-            icon={<ArrowDownCircle />}
-            label="Total Expenses"
-            value={expenses}
-            color="--color-expenses"
-          />
+          <InfoCard icon={<Wallet />} label="Current Balance" value={balance} color="--color-balance" />
+          <InfoCard icon={<ArrowUpCircle />} label="Total Income" value={income} color="--color-income" />
+          <InfoCard icon={<ArrowDownCircle />} label="Total Expenses" value={expenses} color="--color-expenses" />
         </div>
 
-        {/* Bottom 2 Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {/* Income History */}
           <IncomeHistoryChart incomeHistory={incomeHistory} />
-
-          {/* Expense Category */}
           <ExpenseCategoryChart expenses={expensesList} />
         </div>
 
-        {/* Income vs Expense */}
         <div className="grid grid-cols-1 mt-10">
-        <BalanceOverTimeChart
-          incomeHistory={incomeHistory}
-          expensesList={expensesList}
-        />
+          <BalanceOverTimeChart incomeHistory={incomeHistory} expensesList={expensesList} />
         </div>
       </div>
+
+      <button
+        onClick={() => setIsChatOpen(true)}
+        className="fixed bottom-4 right-4 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600"
+      >
+        <MessageCircle size={24} />
+      </button>
+
+      <ChatBotModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </DashboardLayout>
   );
 };

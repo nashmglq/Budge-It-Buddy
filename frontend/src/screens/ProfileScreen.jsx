@@ -3,8 +3,11 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import DefaultImage from "../assets/images/DefaultImage.jpg"
+import { ChatBotModal } from "../components/modals/ChatBotModal"; 
+import { MessageCircle } from "lucide-react"; 
 
 export const ProfileScreen = () => {
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const { user } = useContext(UserContext);
   const [profile, setProfile] = useState({
     name: "",
@@ -164,6 +167,16 @@ export const ProfileScreen = () => {
             </button>
         </form>
       </div>
+      
+                  <button
+                    onClick={() => setIsChatOpen(true)}
+                    className="fixed bottom-4 right-4 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600"
+                  >
+                    <MessageCircle size={24} />
+                  </button>
+            
+                  {/* ChatBot Modal */}
+                  <ChatBotModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </DashboardLayout>
   );
 };

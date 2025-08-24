@@ -4,9 +4,13 @@ import DashboardLayout from '../layouts/DashboardLayout';
 import IncomeChart from '../components/charts/IncomeChart';
 import IncomeCard from '../cards/IncomeCard';
 import IncomeListCard from '../cards/IncomeListCard';
+import { ChatBotModal } from "../components/modals/ChatBotModal"; 
+import { MessageCircle } from "lucide-react"; 
+
 axios.defaults.baseURL = 'http://localhost:5001';
 
 export const IncomeScreen = () => {
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [incomes, setIncomes] = useState([]);
   const [form, setForm] = useState({ name: '', amount: '' });
   const [editId, setEditId] = useState(null);
@@ -141,6 +145,15 @@ export const IncomeScreen = () => {
         {/* Income List */}
         
       </div>
+            <button
+              onClick={() => setIsChatOpen(true)}
+              className="fixed bottom-4 right-4 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600"
+            >
+              <MessageCircle size={24} />
+            </button>
+      
+            {/* ChatBot Modal */}
+            <ChatBotModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </DashboardLayout>
   );
 };
