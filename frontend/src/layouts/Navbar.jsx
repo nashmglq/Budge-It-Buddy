@@ -54,7 +54,7 @@ function Navbar({ collapsed, setCollapsed }) {
       >
         <div className="h-full flex flex-col overflow-y-auto bg-white dark:bg-gray-800 relative">
           {/* 🔹 Header / Logo */}
-          <div className="flex items-center gap-2 px-4 py-5 border-b border-gray-200 dark:border-gray-700 relative">
+          <div className="flex items-center gap-2 px-4 py-5 border-b border-gray-200 dark:border-gray-700 relative mb-5">
             <Wallet className="text-primary" size={28} />
             {!collapsed && (
               <span className="text-lg font-bold text-gray-800 dark:text-gray-100">
