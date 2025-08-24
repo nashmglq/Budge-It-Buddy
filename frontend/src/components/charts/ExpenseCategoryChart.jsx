@@ -7,10 +7,12 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 const COLORS = ["#FABC3F", "#E85C0D", "#C7253E", "#821131", "#90bcc7", "#444"];
 
 export default function ExpenseCategoryChart({ expenses = [] }) {
+  const navigate = useNavigate();
   const safeExpenses = Array.isArray(expenses) ? expenses : [];
 
   // Group & sum by category
@@ -35,9 +37,27 @@ export default function ExpenseCategoryChart({ expenses = [] }) {
 
   return (
     <div className="p-6 rounded-2xl shadow-md border border-gray-200 bg-gray-50">
-      <h2 className="text-lg font-semibold text-gray-800 mb-4">
-        Expense Categories
-      </h2>
+      {/* Title and button row */}
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold text-gray-800">Expense Categories</h2>
+        <button
+          onClick={() => navigate("/expense")}
+          className="px-4 py-2 rounded-lg text-white font-semibold shadow-md transition-all duration-300 transform hover:scale-105"
+          style={{
+            background: "var(--color-secondary)",
+            transitionProperty: "background, transform",
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.background = "var(--color-expenses)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.background = "var(--color-secondary)")
+          }
+        >
+          Go to Expense
+        </button>
+      </div>
+
       {chartData.length > 0 ? (
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
