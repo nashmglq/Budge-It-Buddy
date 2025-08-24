@@ -94,36 +94,39 @@ export default function IncomeListCard({ incomes, handleDelete, handleUpdate }) 
                 className="flex flex-col sm:flex-row sm:items-center bg-gray-50 border p-3 rounded-md shadow-sm gap-2 sm:gap-4"
               >
                 {/* Left: Icon + Name */}
-                <div className="flex items-center gap-2 sm:w-1/2">
-                  <ArrowUpCircle className="text-green-500 w-5 h-5" />
-                  <span className="text-gray-800 font-medium truncate">
-                    {income.name} - ₱{income.amount.toLocaleString()}
-                  </span>
-                </div>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center w-full">
+                  {/* Left: Name + Date */}
+                  <div className="flex items-center gap-2 min-w-0">
+                    <ArrowUpCircle className="text-green-500 w-5 h-5 flex-shrink-0" />
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-gray-800 font-medium truncate">
+                        {income.name} - ₱{income.amount.toLocaleString()}
+                      </span>
+                      <span className="text-gray-500 text-xs opacity-70">
+                        {new Date(income.createdAt).toLocaleDateString("en-PH", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </span>
+                    </div>
+                  </div>
 
-                {/* Center: Date (hidden on mobile) */}
-                <span className="hidden sm:inline text-gray-800 font-medium text-sm sm:w-1/3 text-center truncate">
-                  {new Date(income.createdAt).toLocaleDateString("en-PH", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </span>
-
-                {/* Right: Actions */}
-                <div className="flex gap-2 sm:w-1/6 justify-end">
-                  <button
-                    onClick={() => setEditingIncome(income)}
-                    className="text-sm bg-green-500 hover:bg-green-700 text-white px-3 py-1 rounded-md"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(income.id)}
-                    className="text-sm bg-[#C7253E] hover:bg-[#821131] text-white px-3 py-1 rounded-md"
-                  >
-                    Delete
-                  </button>
+                  {/* Right: Actions */}
+                  <div className="flex gap-2 mt-2 sm:mt-0 sm:flex-row flex-wrap sm:justify-end">
+                    <button
+                      onClick={() => setEditingIncome(income)}
+                      className="text-sm bg-green-500 hover:bg-green-700 text-white px-3 py-1 rounded-md"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(income.id)}
+                      className="text-sm bg-[#C7253E] hover:bg-[#821131] text-white px-3 py-1 rounded-md"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </li>
             ))
