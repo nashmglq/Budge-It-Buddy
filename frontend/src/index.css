@@ -26,4 +26,7 @@ code {
   --color-secondary: #E85C0D;
   --color-accent: #C7253E;
   --color-dark: #821131;
+  --color-balance: #821131;
+  --color-income: #006400;
+  --color-expenses: #c7253e;
 }
