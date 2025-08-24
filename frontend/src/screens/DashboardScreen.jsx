@@ -114,7 +114,7 @@ export const DashboardScreen = () => {
         </div>
 
         {/* Income vs Expense */}
-        <div className="grid grid-cols-1">
+        <div className="grid grid-cols-1 mt-10">
         <BalanceOverTimeChart
           incomeHistory={incomeHistory}
           expensesList={expensesList}
