@@ -9,6 +9,7 @@ const authCheck = (req, res, next) => {
 
     next();
   } catch (err) {
+    console.log(err.message)
     return res.status(200).json({ error: "Something went wrong." });
   }
 };

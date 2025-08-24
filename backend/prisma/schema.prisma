@@ -16,6 +16,7 @@ model User {
   expenses   Expenses[]
   income     Income[]
   chat       chat[]
+  Goal       Goal[]
 
   @@map("user")
 }
@@ -45,10 +46,21 @@ model Income {
 }
 
 model chat {
-  id      Int     @id @default(autoincrement())
-  message String  @db.Text
-  isAI    Boolean @default(false)
+  id        Int      @id @default(autoincrement())
+  message   String   @db.Text
+  isAI      Boolean  @default(false)
   createdAt DateTime @default(now())
-  User    User    @relation(fields: [userId], references: [id])
-  userId  Int
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int
+}
+
+model Goal {
+  id     Int    @id @default(autoincrement())
+  title  String @db.VarChar(60)
+  targetAmount Int
+  currentAmount Int
+  User   User   @relation(fields: [userId], references: [id])
+  userId Int
+
+  @@map("goal")
 }

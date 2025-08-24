@@ -102,7 +102,7 @@ const deleteIncome = async (req, res) => {
                 id: parseInt(id),
             },
         });
-        return res.status(200).json({ success: "Expenses successfully deleted."});
+        return res.status(200).json({ success: "Income successfully deleted."});
     } catch (err) {
         console.log(err);
         return res.status(500).json({ error: "Something went wrong"});
