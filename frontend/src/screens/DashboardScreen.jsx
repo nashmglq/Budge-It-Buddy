@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import DashboardLayout from "../layouts/DashboardLayout";
+import { ChatBotModal } from "../components/modals/ChatBotModal"; // adjust path if needed
+import { MessageCircle } from "lucide-react"; // simple chat icon
 
 export const DashboardScreen = () => {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   return (
     <DashboardLayout>
       <div className="p-6">
@@ -34,6 +38,17 @@ export const DashboardScreen = () => {
           </div>
         </div>
       </div>
+
+      {/* Floating Chat Button */}
+      <button
+        onClick={() => setIsChatOpen(true)}
+        className="fixed bottom-4 right-4 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600"
+      >
+        <MessageCircle size={24} />
+      </button>
+
+      {/* ChatBot Modal */}
+      <ChatBotModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </DashboardLayout>
   );
 };

@@ -7,7 +7,7 @@ import { InsightScreen } from "./screens/InsightScreen";
 import UserAuthScreen from "./screens/UserAuthScreen";
 import { UserContext, UserProvider } from "./context/UserContext";
 import { ProfileScreen } from "./screens/ProfileScreen";
-import ChatBot from "./screens/ChatBot";
+
 
 
 function App() {
@@ -34,10 +34,6 @@ function App() {
           <Route
             path="/insight"
             element={<PrivateRoute><InsightScreen /></PrivateRoute>}
-          />
-          <Route
-            path="/buddy"
-            element={<ChatBot />}
           />
           <Route
             path="/profile"

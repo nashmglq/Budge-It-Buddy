@@ -21,7 +21,6 @@ app.use("/api", incomeRouter)
 
 app.use("/api/chatbot", chatBotRouter)
 
-// app.use("/api", chatBotRouter)
 app.use("/api", goalRouter)
 
 
