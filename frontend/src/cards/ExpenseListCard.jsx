@@ -3,17 +3,17 @@ import { FaTrashAlt, FaArrowDown } from 'react-icons/fa';
 
 const ExpenseListCard = ({ expenses, onEdit, onDelete }) => {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <h3 className="text-xl font-semibold text-[#821131] mb-4">Expense History</h3>
+    <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+      <h3 className="text-lg sm:text-xl font-semibold text-[#821131] mb-4">Expense History</h3>
       <ul className="space-y-4">
         {expenses.map((expense) => (
           <li
             key={expense.id}
-            className="flex justify-between items-center bg-gray-50 border p-4 rounded-xl shadow-sm"
+            className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gray-50 border p-4 rounded-xl shadow-sm gap-3"
           >
             {/* Left: Name and Date */}
-            <div>
-              <p className="text-gray-800 font-medium">{expense.name}</p>
+            <div className="flex flex-col">
+              <p className="text-gray-800 font-medium text-base sm:text-lg">{expense.name}</p>
               <p className="text-sm text-gray-500">
                 {new Date(expense.createdAt).toLocaleDateString('en-GB', {
                   day: '2-digit',
@@ -23,8 +23,8 @@ const ExpenseListCard = ({ expenses, onEdit, onDelete }) => {
               </p>
             </div>
 
-            {/* Right: Delete + Amount + Edit */}
-            <div className="flex items-center gap-3">
+            {/* Right: Actions */}
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3">
               <button
                 onClick={() => onDelete(expense.id)}
                 className="text-gray-500 hover:text-[#C7253E] transition"
