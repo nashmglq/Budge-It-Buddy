@@ -26,6 +26,7 @@ const chatBot = async (req, res) => {
       parts: [{ text: msg.message }],
     }));
 
+
     const incomes = await prisma.income.findMany({ where: { userId } });
     const expenses = await prisma.expenses.findMany({ where: { userId } });
     const totalIncome = incomes.reduce((sum, item) => sum + item.amount, 0);
@@ -202,6 +203,17 @@ const getChat = async (req, res) => {
   }
 };
 
+const deleteChat = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    await prisma.chat.deleteMany({ where: { userId } });
+    return res.status(200).json({ success: "Chat history cleared." });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Failed to clear chat history." });
+  }
+};
+
 const insightsAI = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -292,4 +304,5 @@ module.exports = {
   chatBot,
   getChat,
   insightsAI,
+  deleteChat,
 };

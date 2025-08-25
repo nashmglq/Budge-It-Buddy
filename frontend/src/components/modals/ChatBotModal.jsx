@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { X } from "lucide-react";
+import { X, Trash2 } from "lucide-react";
 import ReactMarkdown from "react-markdown"; // 👈 Markdown renderer
 
 export const ChatBotModal = ({ isOpen, onClose }) => {
@@ -85,17 +85,53 @@ export const ChatBotModal = ({ isOpen, onClose }) => {
     }
   };
 
+  const handleClearHistory = async () => {
+    setMessages([
+      {
+        role: "model",
+        text: "Hello! I'm Buddy. How can I help you with your finances today?",
+      },
+    ]);
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+    await axios.delete("http://localhost:5001/api/chatbot/delete", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    } catch (error) {
+      console.error("Failed to clear chat history:", error);
+    }
+  };
+
+
   if (!isOpen) return null;
 
   return (
+
     <div className="fixed bottom-20 right-4 sm:right-10 w-full max-w-sm bg-white rounded-lg shadow-xl z-40 flex flex-col max-h-[70vh] border border-gray-200">
       {/* Header */}
       <div className="flex justify-between items-center p-3 bg-blue-500 text-white rounded-t-lg">
         <h2 className="font-semibold">Chat with Buddy</h2>
-        <button onClick={onClose} className="p-1 rounded-full hover:bg-blue-600">
-          <X size={20} />
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={handleClearHistory}
+            className="p-1 rounded-full hover:bg-blue-600"
+            title="Clear history"
+          >
+            <Trash2 size={18} />
+          </button>
+          <button
+            onClick={onClose}
+            className="p-1 rounded-full hover:bg-blue-600"
+            title="Close"
+          >
+            <X size={20} />
+          </button>
+        </div>
       </div>
+
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
